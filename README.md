@@ -11,9 +11,17 @@ Features include:
 - Full resolution jpg image capture
 - Configurable profiles for planetary imaging (currently includes Jupiter and Saturn)
 
-### Media
-Using the High Quality Camera, this setup has successfully shot Jupiter and Saturn using a modified 8" dobsonian telescope.
+### Astro_RPI In Action
+Using the High Quality Camera, this setup has successfully shot Jupiter and Saturn using a standard 8" dobsonian telescope.
 
 <img src="./Media/jupiter.jpg" alt="Jupiter" width="400"/> 
 
-<img src="./Media/saturn.jpg" alt="Saturn" width="600"/> 
+<img src="./Media/saturn.jpg" alt="Saturn" width="400"/> 
+
+
+### Mount
+The Astro_RPI mount supports a standard 2" barrel. The included 2" to 1.25" adapter allows for use in standard 1.25" barrels.
+
+<img src="./Media/CAD/assembly_back.JPG" alt="Rear view of Astro_RPI mount" width="400"/> 
+<img src="./Media/CAD/assembly_front.JPG" alt="Front view of Astro_RPI mount" width="400"/> 
+<img src="./Media/CAD/assembly_adapter.JPG" alt="View of Astro_RPI mount with adapter" width="400"/> 
