@@ -24,4 +24,5 @@ The Astro_RPI mount supports a standard 2" barrel. The included 2" to 1.25" adap
 <img src="./Media/CAD/assembly_adapter.JPG" alt="View of Astro_RPI mount with adapter" width="400"/> 
 
 Raspberry Pi HQ Camera model by Yash Turkar
+
 Available here: https://grabcad.com/library/raspberry-pi-hq-camera-1
