@@ -1,22 +1,3 @@
-"""
-######################################################################
-
- █████╗ ███████╗████████╗██████╗  ██████╗         ██████╗ ██████╗ ██╗
-██╔══██╗██╔════╝╚══██╔══╝██╔══██╗██╔═══██╗        ██╔══██╗██╔══██╗██║
-███████║███████╗   ██║   ██████╔╝██║   ██║        ██████╔╝██████╔╝██║
-██╔══██║╚════██║   ██║   ██╔══██╗██║   ██║        ██╔══██╗██╔═══╝ ██║
-██║  ██║███████║   ██║   ██║  ██║╚██████╔╝███████╗██║  ██║██║     ██║
-╚═╝  ╚═╝╚══════╝   ╚═╝   ╚═╝  ╚═╝ ╚═════╝ ╚══════╝╚═╝  ╚═╝╚═╝     ╚═╝
-                                                                     
-                        By Jared Kizer
-
-Utilize the Raspberry Pi and High Quality Camera for astrophotography
-
-Currently only tested with solar system objects, this program offers
-basic camera configuration as well as image capture and preview to
-hone in on solar objects. 
-######################################################################
-"""
 import time
 import os
 from datetime import datetime
@@ -36,11 +17,21 @@ splash = """
 ╚═╝  ╚═╝╚══════╝   ╚═╝   ╚═╝  ╚═╝ ╚═════╝ ╚══════╝╚═╝  ╚═╝╚═╝     ╚═╝
 ######################################################################
 """
+"""                                                        
+                        By Jared Kizer
+
+Utilize the Raspberry Pi and High Quality Camera for astrophotography
+
+Currently only tested with solar system objects, this program offers
+basic camera configuration as well as image capture and preview to
+hone in on solar objects. 
+######################################################################
+"""
 
 # program setup
 print("Astro_RPi is initializing...")
 default_res = (4056, 3040)
-default_framerate = 60
+default_framerate = 10
 default_shuttersp = 16666
 default_iso = 400
               
@@ -124,8 +115,6 @@ def main():
             time.sleep(1)
             system('clear')
 
-
-
 def capture_image():
     try:
         timenow = datetime.now()
@@ -192,8 +181,6 @@ def configure_settings():
             time.sleep(1)
             system('clear')
 
-        
-
 def load_profile():
     system('clear')
     print(splash)
@@ -223,8 +210,6 @@ def load_profile():
             print('=============')
             time.sleep(1)
             system('clear')
-
-    
 
 def configure_ISO():
     system('clear')
@@ -278,9 +263,9 @@ def configure_shuttersp(): #currently disabled as framerate control is causing c
     print('\n')
     print('Configure Shutter Speed')
     print('Opt   Shutter   Framerate')
-    print('1     0.0167       60.0')
-    print('2     0.0333       30.0')
-    print('3     0.0667       15.0')
+    print('1     0.0167       10.0')
+    print('2     0.0333       10.0')
+    print('3     0.0667       10.0')
     print('4     0.1000       10.0')
     print('5     0.2000        5.0')
     print('6     1.0000        1.0')
@@ -300,7 +285,7 @@ def configure_shuttersp(): #currently disabled as framerate control is causing c
             camera.shutter_speed = 33333
             
         elif input_var == 3:
-            camera.framerate = 15
+            camera.framerate = 10
             camera.shutter_speed = 66666
             
         elif input_var == 4:
@@ -341,12 +326,12 @@ def configure_shuttersp(): #currently disabled as framerate control is causing c
 
 #current profiles
 def jupiter_profile():
-    camera.framerate = 30
+    camera.framerate = 10
     camera.shutter_speed = 33333
     camera.iso = 200
 
 def saturn_profile():
-    camera.framerate = 30
+    camera.framerate = 10
     camera.shutter_speed = 33333
     camera.iso = 400
 
@@ -370,6 +355,6 @@ def frac2float(frac_str):
         frac = float(num) / float(denom)
         return whole - frac if whole < 0 else whole + frac
 
-#weird python way of calling the main function
+#call main func
 if __name__ == "__main__":
     main()
