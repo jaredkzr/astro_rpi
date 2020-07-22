@@ -12,7 +12,7 @@ Features include:
 - Configurable profiles for planetary imaging (currently includes Jupiter and Saturn)
 
 ### In Action
-Using the High Quality Camera, this setup has successfully shot Jupiter and Saturn using a standard 8" dobsonian telescope.
+Using the High Quality Camera, this setup has successfully shot Jupiter and Saturn using a standard 8" dobsonian telescope. Below are images taken directly from Astro_RPI with no stacking performed and little post-processing. These serve as proof-of-concepts of basic imaging capabilities. Image stacking should allow for greater detail.
 
 <img src="./Media/jupiter.jpg" alt="Jupiter" width="400"/> <img src="./Media/saturn.jpg" alt="Saturn" width="400"/> 
 
