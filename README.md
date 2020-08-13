@@ -18,7 +18,7 @@ Using the High Quality Camera, this setup has successfully shot Jupiter and Satu
 
 
 ### Mount
-The Astro_RPI mount supports a standard 2" barrel. The included 2" to 1.25" adapter allows for use in standard 1.25" barrels. Assembly requires (4) 2.5x20mm screws and nuts.
+The Astro_RPI mount supports a standard 2" barrel. The included 2" to 1.25" adapter allows for use in standard 1.25" barrels. Assembly requires four (4) 2.5x20mm screws and nuts.
 
 <img src="./Media/CAD/assembly_back.JPG" alt="Rear view of Astro_RPI mount" width="400"/> <img src="./Media/CAD/assembly_front.JPG" alt="Front view of Astro_RPI mount" width="400"/> 
 <img src="./Media/CAD/assembly_adapter.JPG" alt="View of Astro_RPI mount with adapter" width="400"/> 
