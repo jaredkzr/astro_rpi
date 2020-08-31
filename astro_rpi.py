@@ -30,16 +30,16 @@ hone in on solar objects.
 
 # program setup
 print("Astro_RPi is initializing...")
-default_res = (4056, 3040)
-default_framerate = 10
-default_shuttersp = 16666
+default_res = (1012, 760)
+default_framerate = 60
+default_shuttersp = 16667
 default_iso = 400
               
 camera = picamera.PiCamera(
     resolution = default_res,
     framerate = default_framerate,
-    sensor_mode = 3)
-camera.sensor_mode = 3
+    sensor_mode = 4)
+camera.sensor_mode = 4
 camera.shutter_speed = default_shuttersp
 camera.iso = default_iso
 time.sleep(3) #Give time to set gains
@@ -56,7 +56,7 @@ if not os.path.exists(working_folder):
 def main():
     preview_on = False
     run = True
-    previewRes = (1024, 768)
+    previewRes = (1012, 760)
     system('clear')    
     while run == True:
         print(splash)
@@ -73,7 +73,7 @@ def main():
             input_var = int(input('Enter an option: '))
             if input_var == 1:
                 if preview_on == False: 
-                    set_defaults()
+                    #set_defaults()
                     camera.start_preview(resolution=previewRes)
                     preview_on = True
                     system('clear')
@@ -257,7 +257,7 @@ def configure_ISO():
             time.sleep(1)
             system('clear')
 
-def configure_shuttersp(): #currently disabled as framerate control is causing crashes
+def configure_shuttersp(): 
     system('clear')
     print(splash)
     print('\n')
@@ -277,11 +277,11 @@ def configure_shuttersp(): #currently disabled as framerate control is causing c
         input_var = int(input('Enter an option: '))
 
         if input_var == 1:
-            camera.framerate = 60
-            camera.shutter_speed = 16666
+            camera.framerate = 10
+            camera.shutter_speed = 16667
 
         elif input_var == 2:
-            camera.framerate = 30
+            camera.framerate = 10
             camera.shutter_speed = 33333
             
         elif input_var == 3:
