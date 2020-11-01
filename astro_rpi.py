@@ -35,7 +35,7 @@ print("Astro_RPi is initializing...")
 default_res = (2028, 1520)
 default_framerate = 10
 default_shuttersp = 20000
-default_iso = 400
+default_iso = 100
 default_mode = 2
 preview_res = (1012, 760)
               
@@ -50,9 +50,9 @@ camera.framerate = default_framerate
 camera.shutter_speed = default_shuttersp
 camera.iso = default_iso
 time.sleep(1) #Give time to set gains
-camera.exposure_mode = 'off' #Disable automatic exposure correction
-camera.awb_mode = 'off' #Disable automatic white balance correction
-camera.awb_gains = (camera.analog_gain)
+#camera.exposure_mode = 'off' #Disable automatic exposure correction
+#camera.awb_mode = 'off' #Disable automatic white balance correction
+#camera.awb_gains = (camera.analog_gain)
 picamera.PiCamera.CAPTURE_TIMEOUT = 120 #long timeout to allow for lengthy integration times on long exposures
 working_folder = "/home/pi/astro_rpi"
 #Check if save director exists and create it if necessary
