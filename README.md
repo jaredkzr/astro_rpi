@@ -8,7 +8,7 @@ Features include:
 - Easy to use command line interface
 - Camera previews
 - ISO adjustment
-- Full resolution jpg image capture
+- JPG image capture
 - Configurable profiles for planetary imaging (currently includes Jupiter and Saturn)
 
 ### In Action
