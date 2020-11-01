@@ -30,19 +30,26 @@ hone in on solar objects.
 
 # program setup
 print("Astro_RPi is initializing...")
-default_res = (1012, 760)
-default_framerate = 60
-default_shuttersp = 16667
+
+# imaging constants
+default_res = (2028, 1520)
+default_framerate = 10
+default_shuttersp = 20000
 default_iso = 400
+default_mode = 2
+preview_res = (1012, 760)
               
 camera = picamera.PiCamera(
     resolution = default_res,
     framerate = default_framerate,
-    sensor_mode = 4)
-camera.sensor_mode = 4
+    sensor_mode = default_mode)
+camera.sensor_mode = default_mode
+time.sleep(0.1)
+camera.resolution = default_res
+camera.framerate = default_framerate
 camera.shutter_speed = default_shuttersp
 camera.iso = default_iso
-time.sleep(3) #Give time to set gains
+time.sleep(1) #Give time to set gains
 camera.exposure_mode = 'off' #Disable automatic exposure correction
 camera.awb_mode = 'off' #Disable automatic white balance correction
 camera.awb_gains = (camera.analog_gain)
@@ -56,7 +63,6 @@ if not os.path.exists(working_folder):
 def main():
     preview_on = False
     run = True
-    previewRes = (1012, 760)
     system('clear')    
     while run == True:
         print(splash)
@@ -72,18 +78,25 @@ def main():
         try:
             input_var = int(input('Enter an option: '))
             if input_var == 1:
-                if preview_on == False: 
-                    #set_defaults()
-                    camera.start_preview(resolution=previewRes)
-                    preview_on = True
-                    system('clear')
-                else: 
-                    camera.stop_preview()
-                    preview_on = False
-                    system('clear')
+                system('clear')
+                print('Fast tracking preview has been removed.')
+                time.sleep(1)
+                system('clear')
+#                if preview_on == False: 
+#                    set_previewMode()
+#                    time.sleep(0.25)
+#                    camera.start_preview(resolution=preview_res)
+#                    preview_on = True
+#                    system('clear')
+#                else: 
+#                    camera.stop_preview()
+#                    set_defMode()
+#                    time.sleep(0.25)
+#                    preview_on = False
+#                    system('clear')
             elif input_var == 2:
                 if preview_on == False:
-                    camera.start_preview(resolution=previewRes)
+                    camera.start_preview(resolution=preview_res)
                     preview_on = True
                     system('clear')
                 else:
@@ -98,6 +111,7 @@ def main():
                 print('(This can take a while for long exposures)')
                 capture_image()
             elif input_var == 0:
+                camera.close()
                 run = False
                 exit
             else:
@@ -141,7 +155,7 @@ def configure_settings():
         print('2    Configure ISO')
         print('3    Configure Shutter Speed and Framerate')
         print('\n')
-        print('9    Revert to default camera options')
+        print('9    Reset camera settings')
         print('0    Exit Configuration')
         print('\n')
 
@@ -157,7 +171,8 @@ def configure_settings():
             elif input_var == 3:
                 configure_shuttersp()
             elif input_var == 9:
-                set_defaults()
+                camera.close()
+                set_defMode()
                 configuring = False
                 system('clear')
                 exit
@@ -263,50 +278,51 @@ def configure_shuttersp():
     print('\n')
     print('Configure Shutter Speed')
     print('Opt   Shutter   Framerate')
-    print('1     0.0167       10.0')
-    print('2     0.0333       10.0')
-    print('3     0.0667       10.0')
-    print('4     0.1000       10.0')
-    print('5     0.2000        5.0')
-    print('6     1.0000        1.0')
-    print('7     5.0000        0.2')
-    print('8    10.0000        0.1')
+    print('1     0.0200       50.0')
+    print('2     0.0250       30.0')
+    print('3     0.0300       30.0')
+    print('4     0.0400       25.0')
+    print('5     0.0500       20.0')
+    print('6     0.0600       10.0')
+    print('7     0.0750       10.0')
+    print('8     0.1000       10.0')
     print('\n')
 
     try:
         input_var = int(input('Enter an option: '))
-
+        # shutter speed in microseconds
+        #framerate in fps
         if input_var == 1:
-            camera.framerate = 10
-            camera.shutter_speed = 16667
+            #camera.framerate = 50
+            camera.shutter_speed = 19999
 
         elif input_var == 2:
-            camera.framerate = 10
-            camera.shutter_speed = 33333
+            #camera.framerate = 30
+            camera.shutter_speed = 25000
             
         elif input_var == 3:
-            camera.framerate = 10
-            camera.shutter_speed = 66666
+            #camera.framerate = 30
+            camera.shutter_speed = 30000
             
         elif input_var == 4:
-            camera.framerate = 10
-            camera.shutter_speed = 100000
+            #camera.framerate = 25
+            camera.shutter_speed = 40000
             
         elif input_var == 5:
-            camera.framerate = 5
-            camera.shutter_speed = 200000
+            #camera.framerate = 20
+            camera.shutter_speed = 50000
             
         elif input_var == 6:
-            camera.framerate = 1
-            camera.shutter_speed = 1000000
+            #camera.framerate = 10
+            camera.shutter_speed = 60000
 
         elif input_var == 7:
-            camera.framerate = 0.2
-            camera.shutter_speed = 5000000
+            #camera.framerate = 10
+            camera.shutter_speed = 75000
 
         elif input_var == 8:
-            camera.framerate = 0.1
-            camera.shutter_speed = 10000000
+            #camera.framerate = 10
+            camera.shutter_speed = 100000
             
         else:
             system('clear')
@@ -335,12 +351,22 @@ def saturn_profile():
     camera.shutter_speed = 33333
     camera.iso = 400
 
-def set_defaults():
+def set_defMode():
+    camera.sensor_mode = default_mode
+    #time.sleep(0.1)
     camera.resolution = default_res
     camera.framerate = default_framerate
     camera.shutter_speed = default_shuttersp
     camera.iso = default_iso
+    
 
+def set_previewMode():
+    camera.sensor_mode = preview_mode
+    #time.sleep(0.1)
+    camera.resolution = preview_res
+    camera.framerate = preview_framerate
+    camera.shutter_speed = preview_shuttersp
+    camera.iso = preview_iso
 
 def frac2float(frac_str):
     try:
