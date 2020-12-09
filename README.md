@@ -9,6 +9,7 @@ Features include:
 - Camera previews
 - ISO adjustment
 - JPG image capture
+- 1080p video capture 
 - Configurable profiles for planetary imaging (currently includes Jupiter and Saturn)
 
 ### In Action
