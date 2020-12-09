@@ -55,6 +55,7 @@ time.sleep(1) #Give time to set gains
 #camera.awb_gains = (camera.analog_gain)
 picamera.PiCamera.CAPTURE_TIMEOUT = 120 #long timeout to allow for lengthy integration times on long exposures
 working_folder = "/home/pi/astro_rpi"
+is_recording = False
 #Check if save director exists and create it if necessary
 if not os.path.exists(working_folder):
     os.makedirs(working_folder)
@@ -72,7 +73,8 @@ def main():
         print('2    Toggle image preview                Shutter Speed: %.3f s' % (camera.shutter_speed / 1000000))
         print('3    Configure settings                  Framerate: %.1f fps' % (camera.framerate))
         print('4    Single image capture                Analog Gain: %.3f' % (frac2float(camera.analog_gain)))
-        print('0    Exit                                Digital Gain: %.3f' % (frac2float(camera.digital_gain)))
+        print('5    Toggle Video Capture                Digital Gain: %.3f' % (frac2float(camera.digital_gain)))
+        print('0    Exit                                Recording: %s' % (is_recording))
         print('\n')
         
         try:
@@ -110,6 +112,14 @@ def main():
                 print('Capturing...')
                 print('(This can take a while for long exposures)')
                 capture_image()
+            elif input_var == 5:
+                system('clear')
+                if is_recording == False:
+                    is_recording = True
+                    capture_video(1)
+                else:
+                    is_recording == False
+                    capture_video(0)               
             elif input_var == 0:
                 camera.close()
                 run = False
@@ -142,6 +152,36 @@ def capture_image():
         print('===============')
         time.sleep(1)
         system('clear')
+
+def capture_video(record_flag):
+    try:
+        if record_flag == True:
+            #Record video
+            old_res = camera.resolution
+            old_framerate = camera.framerate
+            timenow = datetime.now()
+            filename = working_folder + "/capture-%02d%02d%02d%04d.h264" % (timenow.hour, timenow.minute, timenow.second, timenow.microsecond)
+            camera.resolution = (1280,720)
+            camera.framerate = 60
+            camera.start_recording("%s" %filename)
+            camera.start_preview()
+        else:
+            #Stop recording
+            system('clear')
+            camera.stop_preview()
+            camera.stop_recording()
+            camera.resolution = old_res
+            camera.framerate = old_framerate
+            print("Captured %s" % filename)
+            time.sleep(0.5)
+            system('clear')
+    except:
+        system('clear')
+        print('======================')
+        print('Video Capture Failure')
+        print('======================')
+        time.sleep(1)
+        system('clear')            
 
 def configure_settings():
     system('clear')
