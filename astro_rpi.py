@@ -73,7 +73,7 @@ def main():
         print('2    Toggle image preview                Shutter Speed: %.3f s' % (camera.shutter_speed / 1000000))
         print('3    Configure settings                  Framerate: %.1f fps' % (camera.framerate))
         print('4    Single image capture                Analog Gain: %.3f' % (frac2float(camera.analog_gain)))
-        print('5    Toggle Video Capture                Digital Gain: %.3f' % (frac2float(camera.digital_gain)))
+        print('5    15s video capture                   Digital Gain: %.3f' % (frac2float(camera.digital_gain)))
         print('0    Exit                                Recording: %s' % (is_recording))
         print('\n')
         
@@ -114,12 +114,7 @@ def main():
                 capture_image()
             elif input_var == 5:
                 system('clear')
-                if is_recording == False:
-                    is_recording = True
-                    capture_video(1)
-                else:
-                    is_recording == False
-                    capture_video(0)               
+                capture_video()             
             elif input_var == 0:
                 camera.close()
                 run = False
@@ -153,35 +148,19 @@ def capture_image():
         time.sleep(1)
         system('clear')
 
-def capture_video(record_flag):
-    try:
-        if record_flag == True:
-            #Record video
-            old_res = camera.resolution
-            old_framerate = camera.framerate
-            timenow = datetime.now()
-            filename = working_folder + "/capture-%02d%02d%02d%04d.h264" % (timenow.hour, timenow.minute, timenow.second, timenow.microsecond)
-            camera.resolution = (1280,720)
-            camera.framerate = 60
-            camera.start_recording("%s" %filename)
-            camera.start_preview()
-        else:
-            #Stop recording
-            system('clear')
-            camera.stop_preview()
-            camera.stop_recording()
-            camera.resolution = old_res
-            camera.framerate = old_framerate
-            print("Captured %s" % filename)
-            time.sleep(0.5)
-            system('clear')
-    except:
-        system('clear')
-        print('======================')
-        print('Video Capture Failure')
-        print('======================')
-        time.sleep(1)
-        system('clear')            
+def capture_video():
+    #Record video
+    timenow = datetime.now()
+    filename = working_folder + "/video-%02d%02d%02d%04d.h264" % (timenow.hour, timenow.minute, timenow.second, timenow.microsecond)
+    camera.resolution = (1920,1080)
+    camera.shutter_speed = 20000
+    camera.framerate = 30
+    camera.start_preview()
+    camera.start_recording("%s" %filename, bitrate=25000000, quality = 12)
+    camera.wait_recording(15)
+    camera.stop_recording()
+    camera.stop_preview()
+    print("Captured %s" % filename)
 
 def configure_settings():
     system('clear')
