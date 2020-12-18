@@ -38,7 +38,7 @@ default_shuttersp = 20000
 default_iso = 100
 default_mode = 2
 preview_res = (1012, 760)
-              
+
 camera = picamera.PiCamera(
     resolution = default_res,
     framerate = default_framerate,
@@ -69,34 +69,17 @@ def main():
         print(splash)
         print('\n')
         print('Home                                     Current Configuration')
-        print('1    Toggle fast tracking preview        ISO: %.1f' % (camera.iso))
+        print('1    <Deprecated>                        ISO: %.1f' % (camera.iso))
         print('2    Toggle image preview                Shutter Speed: %.3f s' % (camera.shutter_speed / 1000000))
         print('3    Configure settings                  Framerate: %.1f fps' % (camera.framerate))
         print('4    Single image capture                Analog Gain: %.3f' % (frac2float(camera.analog_gain)))
         print('5    15s video capture                   Digital Gain: %.3f' % (frac2float(camera.digital_gain)))
-        print('0    Exit                                Recording: %s' % (is_recording))
+        print('0    Exit                                ')
         print('\n')
         
         try:
             input_var = int(input('Enter an option: '))
-            if input_var == 1:
-                system('clear')
-                print('Fast tracking preview has been removed.')
-                time.sleep(1)
-                system('clear')
-#                if preview_on == False: 
-#                    set_previewMode()
-#                    time.sleep(0.25)
-#                    camera.start_preview(resolution=preview_res)
-#                    preview_on = True
-#                    system('clear')
-#                else: 
-#                    camera.stop_preview()
-#                    set_defMode()
-#                    time.sleep(0.25)
-#                    preview_on = False
-#                    system('clear')
-            elif input_var == 2:
+            if input_var == 2:
                 if preview_on == False:
                     camera.start_preview(resolution=preview_res)
                     preview_on = True
@@ -149,6 +132,7 @@ def capture_image():
         system('clear')
 
 def capture_video():
+    reset_camera()
     #Record video
     timenow = datetime.now()
     filename = working_folder + "/video-%02d%02d%02d%04d.h264" % (timenow.hour, timenow.minute, timenow.second, timenow.microsecond)
@@ -379,13 +363,27 @@ def set_defMode():
     camera.iso = default_iso
     
 
-def set_previewMode():
-    camera.sensor_mode = preview_mode
-    #time.sleep(0.1)
-    camera.resolution = preview_res
-    camera.framerate = preview_framerate
-    camera.shutter_speed = preview_shuttersp
-    camera.iso = preview_iso
+def reset_camera():
+    global camera
+    camera.close()
+    time.sleep(0.1)
+    # imaging constants
+    default_res = (2028, 1520)
+    default_framerate = 10
+    default_shuttersp = 20000
+    default_iso = 100
+    default_mode = 2
+    preview_res = (1012, 760)
+    camera = picamera.PiCamera(
+        resolution = default_res,
+        framerate = default_framerate,
+        sensor_mode = default_mode)
+    camera.sensor_mode = default_mode
+    time.sleep(0.1)
+    camera.resolution = default_res
+    camera.framerate = default_framerate
+    camera.shutter_speed = default_shuttersp
+    camera.iso = default_iso
 
 def frac2float(frac_str):
     try:
